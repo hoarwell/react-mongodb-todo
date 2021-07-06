@@ -3,13 +3,19 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const router = express.Router();
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const uri = process.env.ATLAS_URI;
+const port = process.env.PORT;
 
 app.use(cors());
 app.options('*', cors());
 app.use(express.json());
 
 mongoose
-    .connect('mongodb+srv://youn9jo:JyJ14102362!@test0.rwjrk.mongodb.net/todoDB?retryWrites=true&w=majority', {
+    .connect(uri, {
         useNewUrlParser: true, 
         useUnifiedTopology: true, 
         useCreateIndex: true, 
@@ -28,6 +34,6 @@ db.once("open", () => console.log("Connected to database"));
 app.use('/', require('./TodoRouter'));
 app.use("/api", router);
 
-app.listen(3001, () => {
-    console.log("port 3001")
+app.listen(port, () => {
+    console.log(`Listening on port: ${port}`)
 })

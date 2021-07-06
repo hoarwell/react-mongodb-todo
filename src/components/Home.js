@@ -26,7 +26,7 @@ const Home = () => {
                 content: content,
             }
             setTodo([...todo, obj]);
-            axios.post("http://localhost:3001/create", obj)
+            axios.post("http://localhost:3001/create", obj);
         } else {
             const editObj = {
                 id: todo[index].id, // 
