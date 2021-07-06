@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/react-mongodb-todo/static/css/main.2c41992d.chunk.css",
+    "main.js": "/react-mongodb-todo/static/js/main.a8149ae1.chunk.js",
+    "main.js.map": "/react-mongodb-todo/static/js/main.a8149ae1.chunk.js.map",
+    "runtime-main.js": "/react-mongodb-todo/static/js/runtime-main.e7f0f164.js",
+    "runtime-main.js.map": "/react-mongodb-todo/static/js/runtime-main.e7f0f164.js.map",
+    "static/js/2.4bce4517.chunk.js": "/react-mongodb-todo/static/js/2.4bce4517.chunk.js",
+    "static/js/2.4bce4517.chunk.js.map": "/react-mongodb-todo/static/js/2.4bce4517.chunk.js.map",
+    "index.html": "/react-mongodb-todo/index.html",
+    "static/css/main.2c41992d.chunk.css.map": "/react-mongodb-todo/static/css/main.2c41992d.chunk.css.map",
+    "static/js/2.4bce4517.chunk.js.LICENSE.txt": "/react-mongodb-todo/static/js/2.4bce4517.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e7f0f164.js",
+    "static/js/2.4bce4517.chunk.js",
+    "static/css/main.2c41992d.chunk.css",
+    "static/js/main.a8149ae1.chunk.js"
+  ]
+}
