@@ -17,6 +17,7 @@ const TodoList = ({ todo, getData, handleEdit, handleDelete, handleChange, handl
                             }
                             <p>added on { data.date }</p>
                             <p>air quality { data.weather.aqi }</p>
+                            <p>temperature { data.weather.temp }c</p>
                             <p>weather status</p>
                             <img src = {`https://airvisual.com/images/${data.weather.weather}.png`} alt = ""/>
                             {

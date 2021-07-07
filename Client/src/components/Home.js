@@ -31,7 +31,6 @@ const Home = () => {
             setTodo([...data]);
         })
     }
-    console.log(todo);
 
     const handleChange = (e) => {
         const { value } = e.target;
@@ -47,7 +46,6 @@ const Home = () => {
         await axios.get(`http://api.airvisual.com/v2/nearest_city?lat=${coord.latitude}&lon=${coord.longitude}&key=${key}`)
             .then((res) => {
                 weatherData = res.data.data;
-                console.log(weatherData.current)
             }).catch((error) => {
                 console.log(error);
             })
@@ -60,7 +58,7 @@ const Home = () => {
                 coord: coord,
                 weather: {
                     aqi: weatherData.current.pollution.aqius,
-                    temperature: weatherData.current.weather.tp,
+                    temp: weatherData.current.weather.tp,
                     weather: weatherData.current.weather.ic,
                 }
                 
@@ -83,7 +81,7 @@ const Home = () => {
                     temp: weatherData.current.weather.tp,
                     weather: weatherData.current.weather.ic,
                 }
-            }
+            } // 배열 준비 
             axios.post(`http://localhost:3001/update/${id}`, editObj)
                 .then((res) => {
                     console.log('Data Updated');
@@ -127,7 +125,7 @@ const Home = () => {
                 <input type = "submit" />
             </form>
             {
-                todo ? <TodoList todo = { todo }
+                todo.length > 0 ? <TodoList todo = { todo }
                                 getData = { getData }
                                 index = { index }
                                 editing = { editing }
