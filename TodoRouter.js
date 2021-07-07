@@ -5,11 +5,15 @@ router.route('/create').post((req, res) => {
     const id = req.body.id;
     const content = req.body.content;
     const date = req.body.date;
+    const coord = req.body.coord;
+    const weather = req.body.weather;
 
     const todo = new Todo({
         id,
         content,
         date,
+        coord,
+        weather
     });
 
     todo.save()
@@ -27,10 +31,15 @@ router.route('/update/:id').post((req, res) => {
     const id = req.body.id;
     const content = req.body.content;
     const date = req.body.date;
+    const coord = req.body.coord;
+    const weather = req.body.weather;
+    
     const editTodo = {
         id,
         content,
         date,
+        coord,
+        weather,
     };
     Todo.findOneAndUpdate({ id : req.params.id }, editTodo)
         .then(() => res.json('Data Updated'))

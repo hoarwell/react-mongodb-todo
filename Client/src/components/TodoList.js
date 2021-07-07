@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const TodoList = ({ todo, handleEdit, handleDelete, handleChange, handleSubmit, index, editing }) => {
-    
+const TodoList = ({ todo, getData, handleEdit, handleDelete, handleChange, handleSubmit, index, editing }) => {
+    useEffect(() => {
+        getData();
+    }, [])
+
     return (
         <div>
             {
@@ -13,6 +16,9 @@ const TodoList = ({ todo, handleEdit, handleDelete, handleChange, handleSubmit, 
                                 (editing && (i === index)) && <input type = "text" data-index = { data.id } onChange = { handleChange } />
                             }
                             <p>added on { data.date }</p>
+                            <p>air quality { data.weather.aqi }</p>
+                            <p>weather status</p>
+                            <img src = {`https://airvisual.com/images/${data.weather.weather}.png`} alt = ""/>
                             {
                                 (editing && (i === index)) && <button onClick = { handleSubmit } data-index = { data.id }>Submit</button>
                             }
