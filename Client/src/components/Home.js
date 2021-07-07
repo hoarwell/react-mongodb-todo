@@ -3,13 +3,11 @@ import axios from 'axios';
 import TodoList from '../components/TodoList';
 
 const Home = () => {
+    const [ index, setIndex ] = useState("");
     const [ content, setContent ] = useState("");
     const [ editing, setEditing ] = useState(false);
     const [ todo, setTodo ] = useState("");
-        // 기존의 todo state는 db에서 가져온 결과를
-        // 담아야 하고 todo state를 이용했던 것 들은 
-        // 일단 db에서 가져온 데이터를 바탕으로 수정해준다.
-    const [ index, setIndex ] = useState("");
+
     const inputRef = useRef();
 
     const handleChange = (e) => {
@@ -18,6 +16,8 @@ const Home = () => {
     }
 
     const handleSubmit = (e) => {
+        const { dataset } = e.target;
+        const id = dataset.index;
         e.preventDefault();
         if (!editing) {
             const obj = {
@@ -25,17 +25,24 @@ const Home = () => {
                 date: Date.now(),
                 content: content,
             }
-            setTodo([...todo, obj]);
-            axios.post("http://localhost:3001/create", obj);
+            axios.post("http://localhost:3001/create", obj)
+                .then((res) => {
+                    console.log('Data Added')
+                }).catch((error) => {
+                    console.log(error)
+                })
         } else {
             const editObj = {
-                id: todo[index].id, // 
+                id: todo[index].id,
                 date: Date.now(),
                 content: content,
             }
-            let editedTodo = todo; // 
-            editedTodo[index] = editObj; // 
-            setTodo(editedTodo); //
+            axios.post(`http://localhost:3001/update/${id}`, editObj)
+                .then((res) => {
+                    console.log('Data Updated')
+                }).catch((error) => {
+                    console.log(error);
+                })
         }
         inputRef.current.value = "";
         setEditing(false);
@@ -44,27 +51,29 @@ const Home = () => {
     const handleEdit = (e) => {
         const { dataset } = e.target;
         setEditing(!editing);
-        let index = todo.findIndex((data => data.id === dataset.index)); // 
+        const index = todo.findIndex((data => data.id === dataset.index));
         setIndex(index);
-        console.log(index);
     }
 
     const handleDelete = (e) => {
         const { dataset } = e.target;
-        const newList = todo.filter((data) => data.id !== dataset.index); // 
-        console.log(newList);
-        setTodo(newList); // 
+        const id = dataset.index;
+        axios.delete(`http://localhost:3001/delete/${id}`)
+            .then((res) => {
+                console.log('Data Deleted')
+            }).catch((error) => {
+                console.log(error);
+            })
     }
 
-    // useEffect(() => {
-    //     fetch("/todo").then((res) => {
-    //         if(res.ok){
-    //             return res.json()
-    //         }
-    //     }).then((jsonRes) => {
-    //         setTodo()
-    //     })
-    // })
+
+    useEffect(() => {
+        axios.get('http://localhost:3001/todos')
+            .then((res) => {
+                const data = res.data;
+                setTodo(data);
+            })
+    })
 
     return(
         <div className = "container">
@@ -75,13 +84,13 @@ const Home = () => {
             </form>
             {
                 todo ? <TodoList todo = { todo }
+                                index = { index }
+                                editing = { editing }
                                 handleChange = { handleChange }
-                                handleDelete = { handleDelete }
+                                handleDelete = { handleDelete } 
                                 handleEdit = { handleEdit } 
-                                handleSubmit = { handleSubmit } 
-                                index = { index } 
-                                editing = { editing } /> 
-                    : "No list for today!"
+                                handleSubmit = { handleSubmit } /> 
+                    : "There's no list yet!"
             }
         </div>
     );
